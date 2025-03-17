@@ -110,3 +110,91 @@ const App = () => {
 };
 
 export default App;
+
+
+// this one 
+import React from "react";
+
+// 🏆 Exercise 1 & 2: File Listing Component
+const FileItem = ({ name, type }) => (
+  <div className="flex items-center space-x-2 p-2 border-b">
+    <span className="font-semibold">{type === "folder" ? "📁" : "📄"}</span>
+    <span>{name}</span>
+  </div>
+);
+
+const FileList = ({ files }) => (
+  <div className="max-w-md mx-auto bg-white shadow-md rounded">
+    {files.map((file) => (
+      <FileItem key={file.id} name={file.name} type={file.type} />
+    ))}
+  </div>
+);
+
+// 🏆 Exercise 3: Tweet List Component
+const Tweet = ({ user, message }) => (
+  <div className="p-4 border-b">
+    <h4 className="font-bold">{user}</h4>
+    <p>{message}</p>
+  </div>
+);
+
+const TweetList = ({ tweets }) => (
+  <div className="max-w-md mx-auto bg-white shadow-md rounded">
+    {tweets.map((tweet, index) => (
+      <Tweet key={index} user={tweet.user} message={tweet.message} />
+    ))}
+  </div>
+);
+
+// 🏆 Exercise 4: Blog Post List Component
+const BlogPost = ({ title, content }) => (
+  <div className="p-4 border-b">
+    <h3 className="font-bold">{title}</h3>
+    <p>{content}</p>
+  </div>
+);
+
+const BlogList = ({ posts }) => (
+  <div className="max-w-md mx-auto bg-white shadow-md rounded">
+    {posts.map((post, index) => (
+      <BlogPost key={index} title={post.title} content={post.content} />
+    ))}
+  </div>
+);
+
+// 🌟 App Component - Calling all exercises
+const App = () => {
+  const files = [
+    { id: 1, name: "index.js", type: "file" },
+    { id: 2, name: "src", type: "folder" },
+    { id: 3, name: "package.json", type: "file" },
+  ];
+
+  const tweets = [
+    { user: "Alice", message: "Hello, World!" },
+    { user: "Bob", message: "React is awesome!" },
+    { user: "Charlie", message: "I love coding!" },
+  ];
+
+  const blogPosts = [
+    { title: "React Basics", content: "Learn React step by step." },
+    { title: "Understanding useState", content: "Hooks are powerful in React." },
+    { title: "Building Components", content: "Modularize your UI." },
+  ];
+
+  return (
+    <div className="p-6">
+      <h2 className="text-xl font-bold mb-4">📂 File List</h2>
+      <FileList files={files} />
+
+      <h2 className="text-xl font-bold mt-6 mb-4">🐦 Tweets</h2>
+      <TweetList tweets={tweets} />
+
+      <h2 className="text-xl font-bold mt-6 mb-4">📝 Blog Posts</h2>
+      <BlogList posts={blogPosts} />
+    </div>
+  );
+};
+
+export default App;
