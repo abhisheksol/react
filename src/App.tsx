@@ -1,6 +1,12 @@
+import RedditFetcher from "./Chapters/apis/RedditFetcher"
 import Child_props from "./Chapters/Children/Child_props"
 import Ex1_error_box from "./Chapters/Children/Ex1_error_box"
 import Ex2 from "./Chapters/Children/Ex2"
+import GenreCloud from "./Chapters/Gitlist/Button"
+import Hackernews from "./Chapters/Gitlist/Hacker_news"
+import Pinerest from "./Chapters/Gitlist/Pinerest"
+import House from "./Chapters/State_in_classes/House"
+import House2 from "./Chapters/State_in_classes/House2"
 
 
 
@@ -27,7 +33,17 @@ function App() {
 
         {/* Excersie 2 */}
 
-         <Ex2/>
+         {/* <Ex2/> */}
+
+         {/* <Hackernews/> */}
+
+         {/* <Pinerest/> */}
+
+         {/* <GenreCloud />; */}
+
+         {/* <House2/> */}
+
+         <RedditFetcher/>
     </div>
   )
 }
