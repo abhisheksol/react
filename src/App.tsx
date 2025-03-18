@@ -7,6 +7,9 @@ import Hackernews from "./Chapters/Gitlist/Hacker_news"
 import Pinerest from "./Chapters/Gitlist/Pinerest"
 import House from "./Chapters/State_in_classes/House"
 import House2 from "./Chapters/State_in_classes/House2"
+import Usereducer from "./pratice/Usereducer"
+import { AbhiProvider } from './pratice/Usecontext';
+import Example from "./pratice/Example"
 
 
 
@@ -14,6 +17,7 @@ function App() {
   
 
   return (
+    <AbhiProvider>
     <div className='bg-black h-screen text-white'>
         
         {/* <Child_props name={"abhishek"}>
@@ -43,8 +47,15 @@ function App() {
 
          {/* <House2/> */}
 
-         <RedditFetcher/>
+         {/* <RedditFetcher/> */}
+
+
+         {/* <Usereducer/> */}
+
+         <Example/>
+        
     </div>
+    </AbhiProvider>
   )
 }
 

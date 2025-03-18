@@ -1,0 +1,152 @@
+📌 Folder Structure
+kotlin
+Copy
+Edit
+/slack-clone
+  ├── src/
+  │   ├── components/
+  │   │   ├── Sidebar.jsx
+  │   │   ├── ChatWindow.jsx
+  │   │   ├── MessageInput.jsx
+  │   ├── App.jsx
+  │   ├── index.js
+  │   ├── data.js
+  ├── package.json
+  ├── tailwind.config.js
+📜 Step 1: Sample Data (data.js)
+javascript
+Copy
+Edit
+export const channels = ["# general", "# help", "# react", "# redux"];
+export const users = ["Dave", "Sarah", "Zack", "Pam", "Erin", "Joe"];
+
+export const fakeMessages = {
+  "# general": [{ sender: "Dave", text: "Hey everyone!" }],
+  "# help": [{ sender: "Sarah", text: "Need help with React?" }],
+  Dave: [{ sender: "Sarah", text: "Hey Dave!" }],
+  Sarah: [{ sender: "Dave", text: "Hi Sarah!" }],
+};
+📜 Step 2: Sidebar Component (Sidebar.jsx)
+jsx
+Copy
+Edit
+import React from "react";
+
+const Sidebar = ({ channels, users, onSelect }) => {
+  return (
+    <div className="w-1/4 bg-blue-900 text-white p-4 h-screen">
+      <h2 className="text-xl font-bold mb-4">Channels</h2>
+      {channels.map((channel) => (
+        <div
+          key={channel}
+          onClick={() => onSelect(channel)}
+          className="cursor-pointer hover:bg-blue-700 p-2 rounded"
+        >
+          {channel}
+        </div>
+      ))}
+      <h2 className="text-xl font-bold mt-6 mb-4">People</h2>
+      {users.map((user) => (
+        <div
+          key={user}
+          onClick={() => onSelect(user)}
+          className="cursor-pointer hover:bg-blue-700 p-2 rounded"
+        >
+          {user}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Sidebar;
+📜 Step 3: Chat Window (ChatWindow.jsx)
+jsx
+Copy
+Edit
+import React from "react";
+
+const ChatWindow = ({ messages }) => {
+  return (
+    <div className="flex-1 bg-gray-100 p-4 overflow-y-auto h-screen">
+      {messages.length === 0 ? (
+        <p className="text-gray-500">Select a channel or user to start chatting</p>
+      ) : (
+        messages.map((msg, index) => (
+          <div key={index} className="mb-2">
+            <strong>{msg.sender}</strong>: {msg.text}
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default ChatWindow;
+📜 Step 4: Message Input (MessageInput.jsx)
+jsx
+Copy
+Edit
+import React, { useState } from "react";
+
+const MessageInput = ({ onSend }) => {
+  const [message, setMessage] = useState("");
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && message.trim()) {
+      onSend(message);
+      setMessage("");
+    }
+  };
+
+  return (
+    <input
+      type="text"
+      className="w-full p-2 border-t border-gray-300"
+      placeholder="Type your message here..."
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      onKeyPress={handleKeyPress}
+    />
+  );
+};
+
+export default MessageInput;
+📜 Step 5: Main App (App.jsx)
+jsx
+Copy
+Edit
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import ChatWindow from "./components/ChatWindow";
+import MessageInput from "./components/MessageInput";
+import { channels, users, fakeMessages } from "./data";
+
+const App = () => {
+  const [selected, setSelected] = useState(null);
+  const [messages, setMessages] = useState(fakeMessages);
+
+  const handleSelect = (name) => {
+    setSelected(name);
+  };
+
+  const handleSend = (text) => {
+    if (!selected) return;
+    setMessages({
+      ...messages,
+      [selected]: [...(messages[selected] || []), { sender: "Me", text }],
+    });
+  };
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar channels={channels} users={users} onSelect={handleSelect} />
+      <div className="flex flex-col flex-1">
+        <ChatWindow messages={messages[selected] || []} />
+        {selected && <MessageInput onSend={handleSend} />}
+      </div>
+    </div>
+  );
+};
+
+export default App;
